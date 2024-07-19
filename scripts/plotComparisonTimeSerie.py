@@ -11,7 +11,7 @@ def check_data(buoy, model):
         # Open files
         buoy_data = xr.open_dataset(buoy)
         model_data = xr.open_dataset(model)
-
+        sat_data = xr.open_dataset(sat)
         # Check common dates
         valid_dates_buoy = buoy_data['time'].where(~np.isnan(buoy_data['hs']), drop=True)
         valid_dates_mod = model_data['time'].where(~np.isnan(model_data['hs']), drop=True)
@@ -36,11 +36,11 @@ def load_data(buoy_file, model_file):
     
     return buoy_data, model_data
 
-def filter_data_by_dates(data, dates):
+def filter_data_by_dates(data):
     """
     Filter data to include only the specified dates.
     """
-    return data.sel(time=dates)
+    return data.sel(time=dates, date1)
 
 
 def calculate_metrics(buoy_data, model_data):
