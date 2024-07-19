@@ -150,10 +150,10 @@ def plot_time_series(buoy_data, model_data, common_dates, exp, output_file):
 # Main program
 if __name__ == "__main__":
     # File paths
-    buoy_file = '/work/cmcc/jc11022/projects/ww3Tools/myBuoytools/data/insitu/41040.nc'
+    buoy_file = f'{pathBuoy}/41040.nc'
     
     exp = 'expb2_143_fct'
-    model_file = f'/work/cmcc/jc11022/simulations/uGlobWW3/{exp}/output/points/ww3_41040.nc'
+    model_file = f'{pathModel}/{exp}/output/points/ww3_41040.nc'
 
     # Check common dates
     common_dates = check_data(buoy_file, model_file)
