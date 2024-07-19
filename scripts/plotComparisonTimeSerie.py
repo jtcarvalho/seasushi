@@ -36,7 +36,7 @@ def load_data(buoy_file, model_file):
     
     return buoy_data, model_data
 
-def filter_data_by_dates(data, dates):
+def filter_data_by_dates(data):
     """
     Filter data to include only the specified dates.
     """
