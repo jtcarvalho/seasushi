@@ -40,7 +40,7 @@ def filter_data_by_dates(data):
     """
     Filter data to include only the specified dates.
     """
-    return data.sel(time=dates)
+    return data.sel(time=dates, date1)
 
 
 def calculate_metrics(buoy_data, model_data):
