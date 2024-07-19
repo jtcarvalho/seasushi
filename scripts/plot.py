@@ -2,4 +2,5 @@
 import numpy as numpy
 
 
-np.load()
+np.load('file.txt')
+
