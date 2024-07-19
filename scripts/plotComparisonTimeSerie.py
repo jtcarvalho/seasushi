@@ -11,7 +11,7 @@ def check_data(buoy, model):
         # Open files
         buoy_data = xr.open_dataset(buoy)
         model_data = xr.open_dataset(model)
-
+        sat_data = xr.open_dataset(sat)
         # Check common dates
         valid_dates_buoy = buoy_data['time'].where(~np.isnan(buoy_data['hs']), drop=True)
         valid_dates_mod = model_data['time'].where(~np.isnan(model_data['hs']), drop=True)
