@@ -1,11 +1,5 @@
-Tools for daily tasks
+#S.O.A.P. Streamlined Operations And Plots
 
-1) load files 
-
-2) plot regular data
-
-3) plot unstructure data
-
-4) other functions
+Functions and scripts to help me on daily tasks
 
 
