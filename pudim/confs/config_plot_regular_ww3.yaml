@@ -1,0 +1,18 @@
+dataset:
+  file_path: "../../../soap/soap/data/ww3-glo025.nc"
+
+plots:
+  - variable: "hs"
+    title: "Significant Wave Height"
+    output_file: "../figs/hs_plot_{datetime}.png"
+    cmap: "viridis"
+    vmin: 0
+    vmax: 8
+    label: "Significant Wave Height (m)"
+  - variable: "t01"
+    title: "Wave Period"
+    output_file: "../figs/t01_plot_{datetime}.png"
+    cmap: "viridis"
+    vmin: 2
+    vmax: 12
+    label: "Wave Period (s)"
