@@ -1,5 +1,5 @@
-# **SOAP Streamlined Operations And Plots for numerical Models**
+# **Pudim Processing Unit for Data and Interactive Modules**
 
-Functions and scripts to help me on daily tasks
+Functions and scripts for numerical models and data plots and analyses 
 
 
