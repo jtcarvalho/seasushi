@@ -1,12 +1,17 @@
 #%%
+import os
+import yaml
 import numpy as np
 import xarray as xr
 import pandas as pd
 from glob import glob
-import matplotlib.pyplot as plt
-import cartopy.crs as crs
+import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
 from cartopy.mpl.ticker import (LongitudeFormatter, LatitudeFormatter)
+
+
 
 
 def get_vect_components(direction):
@@ -109,13 +114,12 @@ def box_file(filename, lon_min, lon_max, lat_min, lat_max):
     return xr.open_dataset(filename).sel(latitude=slice(lat_min, lat_max), longitude=slice(lon_min, lon_max))
 
 
+
+
 def save_time_step(input_file, output_file, time_index=None):
     """
     Save a specific time step from a NetCDF file into another NetCDF file.
-    # Example usage:
-    # save_time_step("input.nc", "last_time.nc")
-    # save_time_step("input.nc", "specific_time.nc", time_index=2)
-
+    
     Parameters:
     - input_file (str): Path to the input NetCDF file.
     - output_file (str): Path to the output NetCDF file.
@@ -127,26 +131,90 @@ def save_time_step(input_file, output_file, time_index=None):
     """
     ds = xr.open_dataset(input_file)
 
+    # Verificando se a variável 'time' existe no arquivo
     if "time" not in ds:
         raise ValueError("The 'time' variable was not found in the NetCDF file.")
 
+    # Garantir que a variável de tempo contém dados
+    time_size = ds["time"].size
+    if time_size == 0:
+        raise ValueError("The 'time' variable is empty in the NetCDF file.")
+    
+    # Definir o índice de tempo
     if time_index is None:
-        time_index = -1
+        time_index = time_size - 1  # Se não for especificado, pega o último índice de tempo
 
-    if time_index < 0 or time_index >= ds["time"].size:
-        raise IndexError("The time index is out of the valid range.")
+    # Verificação se o índice de tempo está dentro do intervalo válido
+    if time_index < 0 or time_index >= time_size:
+        raise IndexError(f"The time index {time_index} is out of the valid range. "
+                          f"Valid range is 0 to {time_size - 1}.")
 
-    selected_time = ds["time"].isel(time=time_index)
+    # Selecionar o tempo desejado
+    selected_time = ds.isel(time=time_index)
 
-    new_ds = xr.Dataset(
-        {"time": ("time", [selected_time.values])},
-        coords={"time": [selected_time.values]},
-    )
+    # Criando um novo Dataset com o tempo selecionado
+    new_ds = selected_time.expand_dims("time")
+
+    # Copiar atributos da variável 'time'
     new_ds["time"].attrs = ds["time"].attrs
 
+    # Salvar o novo arquivo NetCDF
     new_ds.to_netcdf(output_file)
     print(f"Time saved in: {output_file}, Time index: {time_index}")
 
 
+# Função para carregar o arquivo YAML
+def load_config(yaml_file):
+    with open(yaml_file, 'r') as file:
+        return yaml.safe_load(file)
+
+# Função para criar os plots
+def plot_variable(var, datetime_iso, formatted_datetime, title, output_file, cmap, vmin, vmax, label):
+    plt.figure(figsize=(12, 8))
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    norm = Normalize(vmin=vmin, vmax=vmax)
+    im = var.plot(
+        ax=ax,
+        transform=ccrs.PlateCarree(),
+        cmap=cmap,
+        norm=norm,
+        add_colorbar=False
+    )
+    ax.coastlines()
+    
+    # Atualiza o título com a data/hora no formato ISO simplificado
+    plt.title(f"{title} at {datetime_iso}", fontsize=14)
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    
+    # Adiciona o colorbar horizontal
+    cbar = plt.colorbar(im, ax=ax, orientation='horizontal', pad=0.05, aspect=50)
+    cbar.set_label(label, fontsize=12)
+    
+    # Adiciona símbolo ">" para valores maiores que o máximo
+    cbar_ticks = list(range(vmin, vmax + 1, 2))
+    cbar_ticks[-1] = f'>{vmax}'
+    cbar.set_ticks(range(vmin, vmax + 1, 2))
+    cbar.ax.set_xticklabels(cbar_ticks)
+    
+    # Salva a figura com o formato de data simplificado
+    plt.savefig(output_file.replace("{datetime}", formatted_datetime), bbox_inches='tight')
+    plt.close()
+
+# Função para garantir que o diretório de saída existe
+def prepare_output_directory(output_file):
+    output_dir = os.path.dirname(output_file)
+    os.makedirs(output_dir, exist_ok=True)
+
+# Função para abrir o dataset
+def open_dataset(file_path):
+    return xr.open_dataset(file_path)
+
+# Função para extrair informações de data e hora
+def extract_datetime_info(datetime_raw):
+    datetime_raw = str(datetime_raw)  # Extrai a data e hora do último passo de tempo
+    datetime_iso = datetime_raw.split('.')[0][:-3]  # Ex.: '2003-07-01T00:00'
+    formatted_datetime = datetime_iso.replace("T", "-").replace(":", "")[:13] + "h"  # Ex.: '2003-07-01-00h'
+    return datetime_iso, formatted_datetime
 
 # %%
