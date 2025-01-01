@@ -1,4 +1,4 @@
-# **sushi** - Smart Unit for Structuring Interactive Data
+# **sushi**
 
 ## ** Smart Unit for Structuring Interactive Data**
 
