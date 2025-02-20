@@ -5,6 +5,6 @@ poetry.lock
 .pytest_cache/
 sushi-py3.12/
 dist/
-sushi/__pycache__/
-sushi/tests/__pycache__/
+seasushi/__pycache__/
+seasushi/tests/__pycache__/
 
