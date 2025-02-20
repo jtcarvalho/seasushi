@@ -1,11 +1,12 @@
 [tool.poetry]
-name = "sushi"
+name = "seasushi"
 version = "0.1.0"
 description = ""
 authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
+seasushi = { git = "https://github.com/jtcarvalho/seasushi.git" }
 python = "^3.12"
 numpy = "^2.2.3"
 scipy = "^1.15.2"

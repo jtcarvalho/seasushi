@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import json
 from glob import glob
 from natsort import natsorted
-import sushi
 
 class WW3:
     def __init__(self):

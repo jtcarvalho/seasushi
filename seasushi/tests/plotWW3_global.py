@@ -2,7 +2,7 @@
 import os
 import argparse
 import unittest
-from sushi.tools import load_config, plot_variable, prepare_output_directory, open_dataset, extract_datetime_info
+from seasushi.tools import load_config, plot_variable, prepare_output_directory, open_dataset, extract_datetime_info
 
 # Main function
 def main():
