@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "sushi"
 version = "0.1.0"
-description = ""
+description = ""Smart Unit for Scripting and Helping with data Inference
 authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
 readme = "README.md"
 
@@ -17,6 +17,7 @@ matplotlib = "^3.10.0"
 pandas = "^2.2.3"
 notebook = "^7.3.2"
 jupyter = "^1.1.1"
+natsort = "^8.4.0"
 
 
 [build-system]

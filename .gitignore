@@ -2,3 +2,4 @@ createPKG.ipynb
 poetry.lock
 sushi-py3.12/
 dist/
+sushi/__pycache__/
