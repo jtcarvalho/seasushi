@@ -1,3 +1,4 @@
+#%%
 import numpy as np
 import xarray as xr
 import pandas as pd
@@ -5,6 +6,7 @@ import matplotlib.pyplot as plt
 import json
 from glob import glob
 from natsort import natsorted
+import sushi
 
 class WW3:
     def __init__(self):
@@ -163,3 +165,5 @@ if __name__ == "__main__":
         print(f"Saved as {output_file}")
     else:
         print("No common dates")
+
+# %%

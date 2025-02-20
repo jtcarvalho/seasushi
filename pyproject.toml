@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "sushi"
+version = "0.1.0"
+description = ""
+authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+simplejson = "^3.20.1"
+pyyaml = "^6.0.2"
+glob2 = "^0.7"
+xarray = "^2025.1.2"
+cartopy = "^0.24.1"
+numpy = "^2.2.3"
+matplotlib = "^3.10.0"
+pandas = "^2.2.3"
+notebook = "^7.3.2"
+jupyter = "^1.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

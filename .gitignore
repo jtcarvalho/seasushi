@@ -1,2 +1,4 @@
-
-py312-sushi/
+createPKG.ipynb
+poetry.lock
+sushi-py3.12/
+dist/
