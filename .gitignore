@@ -1,5 +1,8 @@
 createPKG.ipynb
 poetry.lock
+.vscode/
 sushi-py3.12/
 dist/
 sushi/__pycache__/
+sushi/tests/__pycache__/
+
