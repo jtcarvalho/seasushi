@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "seasushi"
-version = "0.1.0"
-description = ""
+version = "0.1.1"
+description = "Functions and scripts collection for metocean numerical models, data plots, and analyses"
 authors = ["jtcarvalho <jtcarvalho@gmail.com>"]
 readme = "README.md"
 

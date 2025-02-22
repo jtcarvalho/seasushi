@@ -232,6 +232,7 @@ def plot_variable(var, datetime_iso, formatted_datetime, title, output_file, cma
     
     # Save the figure with the simplified date format
     plt.savefig(output_file.replace("{datetime}", formatted_datetime), bbox_inches='tight')
+    plt.show()
     plt.close()
 
 # Function to ensure the output directory exists
