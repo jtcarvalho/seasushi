@@ -8,8 +8,8 @@ def load_oscar(file_path, time_index):
     v = ds.v[time_index, :, :].values    
     mag = np.sqrt(u**2 + v**2)
     dir = np.arctan2(v, u) * (180 / np.pi) 
-    lon = ds.lon.values[0]
-    lat = ds.lat.values[0]
+    lon = ds.lon.values
+    lat = ds.lat.values
 
     # # Load wind data if available
     # wnd = ds.wnd[time_index, 0].values if 'wnd' in ds else None
