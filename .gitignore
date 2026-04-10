@@ -5,6 +5,5 @@ poetry.lock
 .pytest_cache/
 sushi-py3.12/
 dist/
-seasushi/__pycache__/
-seasushi/tests/__pycache__/
-
+src/geosushi/__pycache__/
+src/geosushi/ocean/__pycache__/
