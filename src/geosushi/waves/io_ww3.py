@@ -141,3 +141,53 @@ def extract_ww3_point_series(file_path, variable='hs'):
     values = ds[variable].values.squeeze()
     ds.close()
     return time, values
+
+
+def extract_ww3_at_point(file_path, lat, lon, variables=None,
+                         start_date=None, end_date=None):
+    """
+    Extract a WW3 grid time series at the point nearest to (lat, lon).
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the WW3 NetCDF file (field output with lat/lon dimensions).
+    lat : float
+        Target latitude in decimal degrees (negative for South).
+    lon : float
+        Target longitude in decimal degrees (negative for West).
+    variables : list of str, optional
+        Variables to extract. If None, all variables are returned.
+    start_date : str or datetime-like, optional
+        Inclusive start of the time range filter.
+    end_date : str or datetime-like, optional
+        Inclusive end of the time range filter.
+
+    Returns
+    -------
+    xarray.Dataset
+        Dataset with time as the primary dimension at the selected grid point.
+    """
+    ds = xr.open_dataset(file_path)
+
+    lat_name = 'latitude' if 'latitude' in ds.coords else 'lat'
+    lon_name = 'longitude' if 'longitude' in ds.coords else 'lon'
+
+    # Normalize longitude to the dataset's convention (0-360 or -180/180)
+    lon_vals = ds[lon_name].values
+    if lon_vals.min() >= 0 and lon < 0:
+        lon = lon + 360.0
+    elif lon_vals.min() < 0 and lon > 180:
+        lon = lon - 360.0
+
+    ds = ds.sel({lat_name: lat, lon_name: lon}, method='nearest')
+
+    if variables is not None:
+        ds = ds[variables]
+
+    if start_date is not None:
+        ds = ds.sel(time=slice(pd.to_datetime(start_date), None))
+    if end_date is not None:
+        ds = ds.sel(time=slice(None, pd.to_datetime(end_date)))
+
+    return ds
